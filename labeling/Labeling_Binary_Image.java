@@ -110,7 +110,7 @@ public class Labeling_Binary_Image implements PlugInFilter {
 		Color c;
 		do {
 			c = this.selectRandomColor();
-		} while (colorSet.contains(c));
+		} while (colorSet.contains(c)||c.equals(BACKGND)||c.equals(FOREGND));
 		setCurrentColor(c);
 	}
 	
