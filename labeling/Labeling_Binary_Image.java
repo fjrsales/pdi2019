@@ -29,6 +29,7 @@ public class Labeling_Binary_Image implements PlugInFilter {
 	private Random rand;
 	private Color currentColor;
 	private int[] labeledPixels;
+	private ImagePlus colorImp;
 	
 	@Override
 	public void run(ImageProcessor ip) {
@@ -59,11 +60,12 @@ public class Labeling_Binary_Image implements PlugInFilter {
 			
 			
 		}
-		ImagePlus colorImp = NewImage.createRGBImage("Labeled Image", w, h, 1, NewImage.FILL_WHITE);
+		this.colorImp = NewImage.createRGBImage("Labeled Image", w, h, 1, NewImage.FILL_WHITE);
 		ImageProcessor colorIp = colorImp.getProcessor();
 		colorImp.show();
 		colorIp.setPixels(labeledPixels);
 		colorImp.updateAndDraw();
+		
 	}
 		
 
@@ -119,6 +121,16 @@ public class Labeling_Binary_Image implements PlugInFilter {
 		this.currentColor = c;
 	}
 
+	public LinkedHashSet<Color> getColorSet() {
+		return colorSet;
+	}
+
+
+	public HashMap<Color, LinkedHashSet<Point>> getComponentsMap() {
+		return componentsMap;
+	}
+
+
 	private Color selectRandomColor() {
 		return new Color(rand.nextInt(COLOR_BOUND));
 	}
@@ -163,6 +175,11 @@ public class Labeling_Binary_Image implements PlugInFilter {
 		return Math.floorDiv(index, w);
 	}
 	
+	public ImagePlus getColorImp() {
+		return colorImp;
+	}
+
+
 	@Override
 	public int setup(String arg0, ImagePlus imp) {
 		// TODO Auto-generated method stub
